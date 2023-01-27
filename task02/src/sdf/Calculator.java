@@ -9,6 +9,8 @@ public class Calculator {
         Console cons = System.console();
         boolean stop = false;
 
+        float $last = 0;
+
         System.out.println("Welcome.");
 
         while(!stop) {
@@ -19,11 +21,24 @@ public class Calculator {
                 System.out.println("Bye bye");
             } else {
                 String[] terms = input.trim().split(" ");
-                float firstNumber = Float.parseFloat(terms[0]);
-                float secondNumber = Float.parseFloat(terms[2]);
-                String operator = terms[1];
 
                 float result = 0;
+                float firstNumber = 0;
+                float secondNumber = 0;
+
+                try {
+                    firstNumber = Float.parseFloat(terms[0]);
+                } catch (Exception e) {
+                    firstNumber = $last;
+                }
+
+                try {
+                    secondNumber = Float.parseFloat(terms[2]);
+                } catch (Exception e) {
+                    secondNumber = $last;
+                }
+
+                String operator = terms[1];
 
                 switch (operator) {
                     case Operations.add:
@@ -39,7 +54,8 @@ public class Calculator {
                         result = firstNumber * secondNumber;
                         break;
                 }
-                System.out.println(result);
+                $last = result;
+                System.out.println($last);
             }
         }
     }
